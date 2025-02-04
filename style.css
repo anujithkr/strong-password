@@ -1,0 +1,49 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    font-family: "Kanit", serif;
+    background-color: black;
+}
+.head1{
+    color: white;
+    margin-left: 70px;
+
+}
+.label{
+    color: white;
+}
+#strength{
+    color: white;
+}
+/* For Tablets */
+@media (max-width: 1000px) {
+  .box{
+    width:500px;
+    margin-left:-60px;
+
+  }
+  .head1{
+    font-size: 40px;
+  }
+}
+
+/* For Phones */
+@media (max-width: 771px) {
+ .box{
+    width: auto;
+    margin-left: auto;
+ }
+ .head1{
+    margin-left: auto;
+ }
+}
+/* for tablet */
+@media(max-width:1395px){
+    .box{
+        width: auto;
+        margin-left: auto;
+    }
+    .head1{
+        font-size:50px;
+    }
+}
