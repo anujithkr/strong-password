@@ -22,11 +22,10 @@
                 <form class="box border border-primary p-4 rounded">
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label label">ENTER YOUR PASSWORD</label>
-                      <input type="password" class="form-control" id="inputPassword">
+                      <input type="password" class="form-control" id="password">
                     </div>
-                    <h4 id="strength">Strength :</h4><br>
+                    <h4 id="strength"></h4><br>
                    <div>
-                    <button type="button" class="btn btn-primary p-2" onclick="checkStrength()">Check Strength</button>
                     <button type="button" class="btn btn-primary p-2 ms-2" onclick="clearAll()">Clear all</button>
                    </div>
                   </form>
@@ -35,31 +34,47 @@
         </div>
     </div>
     <script>
-        function checkStrength() {
-            const password = document.getElementById("inputPassword").value;
-            const strengthText = document.getElementById("strength");
-            let strength = "";
-        
-            if (password.length >= 8 && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-                strength = "Strong";
-                strengthText.style.color = "green";
-            } else if (password.length >= 6 && /\d/.test(password)) {
-                strength = "Medium";
-                strengthText.style.color = "orange";
+        const passwordInput = document.getElementById("password");
+        const strengthOutput = document.getElementById("strength");
+    
+        passwordInput.addEventListener("input", function () {
+            const password = passwordInput.value;
+            const strength = checkPasswordStrength(password);
+            
+            // Display the strength message
+            strengthOutput.textContent = `Strength: ${strength}`;
+    
+            // Change text color based on strength level
+            if (strength === "Weak") {
+                strengthOutput.style.color = "red";
+            } else if (strength === "Medium") {
+                strengthOutput.style.color = "orange";
+            } else if (strength === "Strong") {
+                strengthOutput.style.color = "green";
             } else {
-                strength = "Weak";
-                strengthText.style.color = "red";
+                strengthOutput.style.color = "black";
             }
-        
-            strengthText.textContent = `Strength :${strength}`
+        });
+    
+        function checkPasswordStrength(password) {
+            let strength = 0;
+    
+            if (password.length >= 6) strength++; // At least 6 characters
+            if (password.match(/[A-Z]/)) strength++; // At least one uppercase letter
+            if (password.match(/[0-9]/)) strength++; // At least one number
+            if (password.match(/[@$!%*?&]/)) strength++; // At least one special character
+    
+            if (strength === 0 || password.length < 6) return "Weak";
+            if (strength === 2) return "Medium";
+            if (strength >= 3) return "Strong";
+    
+            return "Weak";
         }
-        
+    
         function clearAll() {
-            document.getElementById("inputPassword").value = "";   // Clears the input field
-            document.getElementById("strength").textContent = "Strength:";   // Keeps the 'Strength:' label, clears the output
-            document.getElementById("strength").style.color = "white";   // Resets the color to black
+            passwordInput.value = "";
+            strengthOutput.textContent = "";
         }
-        
         
     </script>
     
